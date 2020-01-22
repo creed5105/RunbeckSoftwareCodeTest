@@ -34,7 +34,12 @@ namespace ProcessInputFile
                     repeatExercise = true;
                     continue;
                 }
-                
+
+                correctlyFormattedRecordsFile = filePath + "\\CorrectlyFormattedRecords.txt";
+                incorrectlyFormattedRecordsFile = filePath + "\\IncorrectlyFormattedRecords.txt";
+                File.Delete(correctlyFormattedRecordsFile);
+                File.Delete(incorrectlyFormattedRecordsFile);
+
                 Console.WriteLine("\nThank you. This is also where the output files will be stored.");
 
                 do {
@@ -46,14 +51,10 @@ namespace ProcessInputFile
                         validInputFile = true;
                     } catch (Exception e) {
                         Console.WriteLine(e);
-                        Console.WriteLine("\nInvalid filename: '" + fullFileName + "' does not exist.");
+                        Console.WriteLine("\nInvalid filename: '" + inputFileName + "' does not exist in '" + filePath + "'");
                     }
                 } while(!validInputFile);
 
-                correctlyFormattedRecordsFile = filePath + "\\CorrectlyFormattedRecords.txt";
-                incorrectlyFormattedRecordsFile = filePath + "\\IncorrectlyFormattedRecords.txt";
-                File.Delete(correctlyFormattedRecordsFile);
-                File.Delete(incorrectlyFormattedRecordsFile);
 
                 string splitBy = null;
 
@@ -108,6 +109,8 @@ namespace ProcessInputFile
                 if (incorrectlyFormattedRecords.Count > 0) {
                     File.WriteAllLines(incorrectlyFormattedRecordsFile, incorrectlyFormattedRecords);                    
                 }
+
+                repeatExercise = false;
 
                 do {
                     Console.WriteLine("\nGo again? (Y/N)");
